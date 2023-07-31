@@ -56,7 +56,6 @@ group :development, :test do
 
   # Security Tools
   gem 'brakeman'
-  gem 'bundler-audit'
   gem 'ruby_audit'
   # Database
   gem 'pg'
@@ -68,7 +67,6 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
-gem 'bundler-audit'
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
