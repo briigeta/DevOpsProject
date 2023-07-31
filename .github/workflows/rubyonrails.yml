@@ -10,14 +10,6 @@ jobs:
   test:
     runs-on: windows-latest
 
-    services:
-      db:
-        image: postgres:11-alpine
-        env:
-          POSTGRES_DB: rails_test
-          POSTGRES_USER: rails
-          POSTGRES_PASSWORD: password
-
     env:
       RAILS_ENV: test
       DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
@@ -29,7 +21,7 @@ jobs:
       - name: Setup Ruby
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: 3.2.2
+          ruby-version: 3.2.2 
 
       - name: Install Bundler
         run: gem install bundler
@@ -42,3 +34,4 @@ jobs:
 
       - name: Run tests
         run: bin/rake
+
