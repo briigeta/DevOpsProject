@@ -56,6 +56,9 @@ jobs:
       - name: Install bundler-audit
         run: gem install bundler-audit
         
+      - name: Add gem installation path to PATH
+        run: echo "::add-path::$(ruby -e 'puts Gem.user_dir')/bin"
+        
       - name: Security audit dependencies
         run: bundle exec bundle audit --update
 
