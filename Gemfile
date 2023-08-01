@@ -56,7 +56,6 @@ group :development, :test do
 
   # Security Tools
   gem 'brakeman'
-  gem 'bundler-audit'
   gem 'ruby_audit'
   # Database
   gem 'pg'
@@ -77,8 +76,8 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem 'bundler-audit'
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
-  gem 'bundler-audit'
 end

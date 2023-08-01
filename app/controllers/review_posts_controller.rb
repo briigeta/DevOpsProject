@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# This is a controller for managing review posts.
+# This is the ReviewPostsController class.
 class ReviewPostsController < ApplicationController
   before_action :set_review_post, only: %i[show edit update destroy]
 
