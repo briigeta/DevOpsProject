@@ -35,37 +35,30 @@ jobs:
       - name: Run tests
         run: bin/rake
 
-lint:
-  runs-on: windows-latest
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+  lint:
+    runs-on: windows-latest
 
-    - name: Setup Ruby
-      uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf
-      with:
-        ruby-version: 3.2.2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Install bundler
-      run: gem install bundler
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf
+        with:
+          ruby-version: 3.2.2
 
-    - name: Install dependencies
-      run: bundle install
+      - name: Install Bundler
+        run: gem install bundler
 
-    - name: Install bundler-audit gem
-      run: gem install bundler-audit
+      - name: Install dependencies
+        run: bundle install
 
-    - name: Set up database schema
-      run: bin/rails db:schema:load
+      - name: Security audit dependencies
+        run: bundle exec bundle audit --update
 
-    - name: Run tests
-      run: bin/rake
+      - name: Security audit application code
+        run: bundle exec brakeman -q -w2
 
-    - name: Security audit dependencies
-      run: bundle exec bundle audit --update
+      - name: Lint Ruby files
+        run: bundle exec rubocop --parallel
 
-    - name: Security audit application code
-      run: bundle exec brakeman -q -w2
-
-    - name: Lint Ruby files
-      run: bundle exec rubocop --parallel
