@@ -52,7 +52,10 @@ jobs:
 
       - name: Install dependencies
         run: bundle install
-
+        
+      - name: Install bundler-audit
+        run: gem install bundler-audit
+        
       - name: Security audit dependencies
         run: bundle exec bundle audit --update
 
