@@ -47,6 +47,9 @@ jobs:
         with:
           ruby-version: 3.2.2
 
+      - name: Set Gem user bin directory
+        run: echo "::add-path::$(ruby -e 'puts Gem.user_dir')/bin"
+
       - name: Install Bundler
         run: gem install bundler
 
