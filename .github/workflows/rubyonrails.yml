@@ -41,24 +41,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Setup Ruby
+      - name: Install Ruby and gems
         uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf
         with:
-          ruby-version: 3.2.2
-          
-      - name: Set Gem user bin directory
-        run: echo "::add-path::$(ruby -e 'puts Gem.user_dir')/bin"
-
-      - name: Install Bundler
-        run: gem install bundler
-
-      - name: Install dependencies
-        run: bundle install
-        
-      - name: Install bundler-audit
-        run: gem install bundler-audit
-       
+          bundler-cache: true
       - name: Security audit dependencies
         run: bundle exec bundle audit --update
 
