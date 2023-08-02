@@ -1,0 +1,37 @@
+name: Deploy to Heroku
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Add your linting and testing steps here
+
+      - name: Deploy to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY}}
+        run: |
+          # Install Heroku CLI (skip if already installed)
+          curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+
+          # Login to Heroku using the API key
+          echo $HEROKU_API_KEY | heroku login -i
+
+          # Create or select the Heroku app
+          heroku create your-heroku-app-name
+
+          # Push code to Heroku
+          git push heroku main
+
+          # Run database migrations
+          heroku run rake db:migrate
+
+          # Open the app in the browser (optional)
+          heroku open
