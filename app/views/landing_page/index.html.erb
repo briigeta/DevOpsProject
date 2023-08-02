@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<%= csrf_meta_tags %>
+<%= csp_meta_tag %>
+  <title>RevResto</title>
+  <%= stylesheet_link_tag 'landing' %>
+  <%= javascript_include_tag 'application' %>
+</head>
+<body>
+  <div class="container">
+    <h1>RevResto: Where Taste Meets Adventure</h1>
+    <h2> Unleash Your Inner Foodie!</h2>
+</div>
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <%= image_tag('pizza', class: 'pizza', style: 'width: 600px; height: 400px;') %>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

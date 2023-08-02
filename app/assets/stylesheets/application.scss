@@ -13,3 +13,29 @@
  *= require_tree .
  *= require_self
  */
+ @import "bootstrap"; 
+
+ body{
+    background-color:tomato;
+ }
+
+ form{
+    display: flex;
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  max-width: 400px; 
+  margin: 0 auto; 
+ }
+
+a.deviselinks{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+ }
+
+ a.deviselinks:hover{
+    color: darkgrey;
+
+}

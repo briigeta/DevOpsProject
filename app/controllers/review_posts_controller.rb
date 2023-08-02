@@ -23,6 +23,7 @@ class ReviewPostsController < ApplicationController
   # POST /review_posts or /review_posts.json
   def create
     @review_post = ReviewPost.new(review_post_params)
+    @review_post.user = current_user
 
     respond_to do |format|
       if @review_post.save
@@ -67,6 +68,6 @@ class ReviewPostsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def review_post_params
-    params.require(:review_post).permit(:title, :body, :rating)
+    params.require(:review_post).permit(:title, :body, :rating, :user_id)
   end
 end

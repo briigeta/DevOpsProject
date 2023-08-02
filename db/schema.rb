@@ -12,13 +12,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_230_801_214_507) do
+ActiveRecord::Schema[7.0].define(version: 20_230_802_015_411) do
   create_table 'review_posts', force: :cascade do |t|
     t.string 'title'
     t.text 'body'
     t.integer 'rating'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.integer 'user_id', null: false
+    t.index ['user_id'], name: 'index_review_posts_on_user_id'
   end
 
   create_table 'users', force: :cascade do |t|
@@ -32,4 +34,6 @@ ActiveRecord::Schema[7.0].define(version: 20_230_801_214_507) do
     t.index ['email'], name: 'index_users_on_email', unique: true
     t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
   end
+
+  add_foreign_key 'review_posts', 'users'
 end

@@ -2,11 +2,13 @@
 
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+gem 'sassc'
 
 ruby '3.2.2'
 # Devise is a User Management and Authentication gem.
 gem 'devise'
-
+# Bootstap is a gem that is used to bootstrap
+gem 'bootstrap', '~> 5.2.3'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.6'
 
