@@ -18,24 +18,31 @@ jobs:
         with:
           ruby-version: 3.2.2 
 
-      - name: Install Bundler
-        run: gem install bundler
-
-      - name: Install dependencies
-        run: bundle install
-
-      - name: Set up database schema
-        run: bin/rails db:schema:load
-
-      - name: Run tests
-        run: bin/rake
-        
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@master
+      - name: Install Node.js
+        uses: actions/setup-node@v2
         with:
-          host: 13.51.238.91
-          username: Administrator
-          key: ${{ secrets.SSH_PRIVATE_KEY }} # Add the private key as a secret in your repository
+          node-version: v18.17.0.
+          
+      - name: Deploy to Windows EC2
+        run: |
+          $ec2InstanceIP = "13.51.238.91"
+          $ec2Username = "Administrator"
+          $privateKeyPath = "C:\Users\PC\Downloads\resto-review.pem"
+          
+          Enter-PSSession -ComputerName $ec2InstanceIP -Credential $ec2Username -SSHTransport -SSHPrivateKey $privateKeyPath
 
-        # Add any commands to perform deployment tasks on your EC2 instance here
+          cd C:\Users\PC\devopsproject
+
+          gem install bundler
+          bundle install
+
+          
+          rails db:create
+          rails db:migrate
+
+          rails assets:precompile
+
+          rails server -d
+
+          Exit-PSSession
 
