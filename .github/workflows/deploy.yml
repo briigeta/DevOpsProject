@@ -1,4 +1,4 @@
-name: Deploy to Heroku
+name: Deploy to EC2
 
 on:
   push:
@@ -8,30 +8,22 @@ on:
 jobs:
   deploy:
     runs-on: windows-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Add your linting and testing steps here
-
-      - name: Deploy to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY}}
+      - name: Install dependencies and build
         run: |
-          # Install Heroku CLI (skip if already installed)
-          curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+          # Install Ruby dependencies using Bundler
+             bundle install
+        
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: 13.51.238.91
+          username: Administrator
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # Add the private key as a secret in your repository
 
-          # Login to Heroku using the API key
-          echo $HEROKU_API_KEY | heroku login -i
+        # Add any commands to perform deployment tasks on your EC2 instance here
 
-          # Create or select the Heroku app
-          heroku create your-heroku-app-name
-
-          # Push code to Heroku
-          git push heroku main
-
-          # Run database migrations
-          heroku run rake db:migrate
-
-          # Open the app in the browser (optional)
-          heroku open
