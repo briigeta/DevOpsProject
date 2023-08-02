@@ -13,10 +13,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install dependencies and build
-        run: |
-          # Install Ruby dependencies using Bundler
-             bundle install
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf 
+        with:
+          ruby-version: 3.2.2 
+
+      - name: Install Bundler
+        run: gem install bundler
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Set up database schema
+        run: bin/rails db:schema:load
+
+      - name: Run tests
+        run: bin/rake
         
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
