@@ -28,10 +28,11 @@ jobs:
       - name: Set up database schema
         run: bin/rails db:schema:load
 
-      - name: Run tests
-        run: bin/rake
+      - name: Build assets
+        run: bin/rails assets:precompile
 
-jobs:
+      # Add any other build steps specific to your application here
+
   test:
     runs-on: windows-latest
 
@@ -89,5 +90,4 @@ jobs:
 
       - name: Run Brakeman
         run: bundle exec brakeman -q -w2
-
 
