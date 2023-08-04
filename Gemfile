@@ -3,7 +3,6 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem 'sassc'
-
 ruby '3.2.2'
 # Devise is a User Management and Authentication gem.
 gem 'devise'
