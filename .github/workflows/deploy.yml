@@ -1,4 +1,4 @@
-name: Deploy to Heroku
+name: Deploy to EC2
 
 on:
   push:
@@ -8,30 +8,41 @@ on:
 jobs:
   deploy:
     runs-on: windows-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Add your linting and testing steps here
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf 
+        with:
+          ruby-version: 3.2.2 
 
-      - name: Deploy to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY}}
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+          
+      - name: Deploy to Windows EC2
         run: |
-          # Install Heroku CLI (skip if already installed)
-          curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+          $ec2InstanceIP = "13.51.238.91"
+          $ec2Username = "Administrator"
+          $privateKeyPath = "C:\Users\PC\Downloads\resto-review.pem"
+          
+          Enter-PSSession -ComputerName $ec2InstanceIP -Credential $ec2Username -SSHTransport -SSHPrivateKey $privateKeyPath
 
-          # Login to Heroku using the API key
-          echo $HEROKU_API_KEY | heroku login -i
+          cd C:\Users\PC\devopsproject
 
-          # Create or select the Heroku app
-          heroku create your-heroku-app-name
+          gem install bundler
+          bundle install
 
-          # Push code to Heroku
-          git push heroku main
+          
+          rails db:create
+          rails db:migrate
 
-          # Run database migrations
-          heroku run rake db:migrate
+          rails assets:precompile
 
-          # Open the app in the browser (optional)
-          heroku open
+          rails server -d
+
+          Exit-PSSession
+
